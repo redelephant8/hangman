@@ -1,0 +1,38 @@
+---
+:win: false
+:round: 7
+:code: 'giving
+
+  '
+:codeArr:
+- g
+- i
+- v
+- i
+- "n"
+- g
+:guessArr:
+- _
+- i
+- _
+- i
+- "n"
+- _
+:incorrectLetters:
+- a
+- b
+- c
+- d
+- e
+- m
+- p
+:usedLetters:
+- a
+- b
+- c
+- d
+- e
+- i
+- m
+- p
+- "n"
