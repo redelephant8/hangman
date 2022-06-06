@@ -69,7 +69,6 @@ class Game
     end
 
     def inputLetter
-        puts @code
         loop do
             puts "Enter a letter to guess or enter 'save' to save your game: "
             letter = gets.chomp.to_s.downcase
