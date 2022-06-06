@@ -1,31 +1,34 @@
 ---
 :win: false
-:round: 2
-:code: 'overcome
+:round: 5
+:code: 'drive
 
   '
 :codeArr:
-- o
+- d
+- r
+- i
 - v
 - e
-- r
-- c
-- o
-- m
-- e
 :guessArr:
-- _
-- _
-- e
-- _
-- _
-- _
+- d
+- r
+- i
 - _
 - e
 :incorrectLetters:
+- s
 - a
-- i
+- b
+- l
+- p
 :usedLetters:
+- s
 - a
-- e
+- b
+- d
 - i
+- r
+- l
+- p
+- e

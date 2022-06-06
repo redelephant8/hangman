@@ -1,36 +1,6 @@
 require 'yaml'
 require 'colorize'
-
-module Saving
-    def save
-        Dir.mkdir('saves') unless Dir.exist?('saves')
-        file = File.open("saves/test.yml", 'w')
-        YAML.dump({
-            :win => @win,
-            :round => @round,
-            :code => @code,
-            :codeArr => @codeArr,
-            :guessArr => @guessArr,
-            :incorrectLetters => @incorrectLetters,
-            :usedLetters => @usedLetters,
-        }, file)
-        file.close
-        abort "The game has succesfully been saved to your local device".bold
-    end
-
-    def load
-        file = YAML.load(File.read("saves/test.yml"))
-        @win = file[:win]
-        @round = file[:round]
-        @code = file[:code]
-        @codeArr = file[:codeArr]
-        @guessArr = file[:guessArr]
-        @incorrectLetters = file[:incorrectLetters]
-        @usedLetters = file[:usedLetters]
-        self.gameLoop
-    end
-
-end
+require_relative 'serialization'
 
 class Game
     include Saving
@@ -73,6 +43,9 @@ class Game
             puts ""
             puts "Mistakes Remaining: #{8-@round}".bold
             @letter = inputLetter
+            if @letter.is_a?(Integer)
+                break
+            end
             checkGuess(@letter)
             printArray(@guessArr)
             printArray(@incorrectLetters)
@@ -80,6 +53,11 @@ class Game
             sleep(1.5)
             puts "----------------------------"
             @win = checkWin
+        end
+
+        if @letter.is_a?(Integer)
+            printArray(@codeArr)
+            @win = true
         end
 
         if @win == true
@@ -91,24 +69,34 @@ class Game
     end
 
     def inputLetter
+        puts @code
         loop do
             puts "Enter a letter to guess or enter 'save' to save your game: "
             letter = gets.chomp.to_s.downcase
+
+            if letter == @codeArr.join
+            return 1
+            end
             if letter == 'save'
                 save
             end
-            if @usedLetters.include?(letter) == false
-                @usedLetters.push(letter)
-                return letter
+
+            if letter.match(/[a-zA-Z]/) && letter.length  == 1
+                if @usedLetters.include?(letter) == false
+                    @usedLetters.push(letter)
+                    return letter
+                else
+                    puts "You have already guessed this letter."
+                    puts ""
+                end
             else
-                puts "You have already guessed this letter."
-                puts ""
+                puts "Invalid response"
             end
         end
     end
 
     def printArray(arr)
-        if arr == @guessArr
+        if arr == @guessArr || arr == @codeArr
         puts ""
         print "Results: "
         end
@@ -118,16 +106,23 @@ class Game
             print "Incorrect Letters: ".red.bold
             end
         end
+
+        if arr != @codeArr
         arr.each do |i|
             print "#{i} "
         end
+    else
+        arr.each do |i|
+            print"#{i}"
+        end
+    end
         puts "\n"
     end
 
     def separateCode(code)
         arr = Array.new
-        for i in 0..@code.length - 2
-            arr[i] = @code[i]
+        for i in 0..code.length - 2
+            arr[i] = code[i]
         end
         arr
     end
@@ -156,8 +151,5 @@ class Game
    
 
 end
-
-
-
 
 Game.new
