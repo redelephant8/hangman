@@ -1,0 +1,31 @@
+---
+:win: false
+:round: 2
+:code: 'overcome
+
+  '
+:codeArr:
+- o
+- v
+- e
+- r
+- c
+- o
+- m
+- e
+:guessArr:
+- _
+- _
+- e
+- _
+- _
+- _
+- _
+- e
+:incorrectLetters:
+- a
+- i
+:usedLetters:
+- a
+- e
+- i
